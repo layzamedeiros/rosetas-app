@@ -4,10 +4,13 @@ CREATE TYPE "OrderStatus" AS ENUM ('NEW', 'QUOTE_SENT', 'IN_PRODUCTION', 'READY'
 -- CreateEnum
 CREATE TYPE "Priority" AS ENUM ('LOW', 'NORMAL', 'HIGH');
 
+-- CreateEnum
+CREATE TYPE "ProductCategory" AS ENUM ('INVITES', 'STATIONERY', 'TABLE_DECOR', 'PACKAGING', 'FAVORS_KITS', 'BRANDING');
+
 -- CreateTable
 CREATE TABLE "Product" (
     "id" TEXT NOT NULL,
-    "category" TEXT NOT NULL,
+    "category" "ProductCategory" NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "imageUrl" TEXT,

@@ -27,3 +27,15 @@ export const Priority = {
 } as const
 
 export type Priority = (typeof Priority)[keyof typeof Priority]
+
+
+export const ProductCategory = {
+  INVITES: 'INVITES',
+  STATIONERY: 'STATIONERY',
+  TABLE_DECOR: 'TABLE_DECOR',
+  PACKAGING: 'PACKAGING',
+  FAVORS_KITS: 'FAVORS_KITS',
+  BRANDING: 'BRANDING'
+} as const
+
+export type ProductCategory = (typeof ProductCategory)[keyof typeof ProductCategory]
