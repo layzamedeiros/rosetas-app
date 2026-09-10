@@ -1,15 +1,23 @@
-import { Order, OrderItem, Product } from "@/generated/prisma/client";
+import { Prisma } from "@/generated/prisma/client";
 import { formatOrderSummary } from "@/lib/format-order-summary";
 import Link from "next/link";
 
-type OrderWithItems = Order & { items: (OrderItem & { product: Product | null })[] };
+type OrderWithItems = Prisma.OrderGetPayload<{
+  include: {
+    items: {
+      include: {
+        product: true;
+      };
+    };
+  };
+}>;
 
 export function UpcomingDeliveries({ orders }: { orders: OrderWithItems[] }) {
   return (
     <div className="bg-card rounded-2xl border border-border p-6">
       <div className="flex items-center justify-between mb-4">
         <h2 className="font-sans text-base font-medium">Próximas entregas</h2>
-        <Link href="/admin/orders" className="text-primary text-sm">
+        <Link href="/admin/pedidos" className="text-primary text-sm">
           Ver kanban →
         </Link>
       </div>

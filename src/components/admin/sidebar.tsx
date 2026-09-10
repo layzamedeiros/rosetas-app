@@ -9,8 +9,8 @@ import { useState } from "react";
 
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/admin/orders", label: "Pedidos", icon: ClipboardList },
-  { href: "/admin/products", label: "Produtos", icon: Package },
+  { href: "/admin/pedidos", label: "Pedidos", icon: ClipboardList },
+  { href: "/admin/produtos", label: "Produtos", icon: Package },
 ];
 
 export function Sidebar() {
@@ -20,15 +20,15 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        "shrink-0 border-r border-border bg-card flex flex-col transition-all duration-200",
-        collapsed ? "w-17" : "w-50"
+        "shrink-0 border-r border-border bg-primary-foreground flex flex-col transition-all duration-200",
+        collapsed ? "w-17" : "w-55"
       )}
     >
-      <div className="flex items-center justify-between px-4 pt-4 pb-2">
+      <div className="flex items-center justify-between p-4 border-b border-border">
         {!collapsed && (
           <Image
             src="/logo-rosetas.png"
-            width={120}
+            width={130}
             height={120}
             alt="Rosetas Personalizados"
           />
@@ -48,7 +48,7 @@ export function Sidebar() {
         </button>
       </div>
 
-      <nav className="flex-1 px-3 mt-3 space-y-1">
+      <nav className="flex-1 px-3 mt-4 space-y-1">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href;
@@ -67,7 +67,7 @@ export function Sidebar() {
               )}
             >
               <Icon
-                size={collapsed ? 18 : 20}
+                size={18}
                 className="shrink-0"
               />
 

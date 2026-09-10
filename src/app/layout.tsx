@@ -1,3 +1,4 @@
+import { ToastProvider } from "@/components/providers/toast-provider";
 import type { Metadata } from "next";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
@@ -26,6 +27,7 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={`${cormorant.variable} ${dmSans.variable}`}>
         {children}
+        <ToastProvider />
       </body>
     </html>
   );

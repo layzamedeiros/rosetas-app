@@ -15,12 +15,30 @@ export async function getOrderCountsByStatus() {
     status,
     count: countByStatus[status] ?? 0,
   }));
+
+  
 }
 
 export async function getUpcomingDeliveries(limit = 5) {
   return prisma.order.findMany({
     orderBy: { eventDate: { sort: "asc", nulls: "last" } },
     take: limit,
+    include: { items: { include: { product: true } } },
+  });
+}
+
+export async function getAllOrdersGroupedByStatus() {
+  const orders = await prisma.order.findMany({
+    orderBy: { createdAt: "desc" },
+    include: { items: { include: { product: true } } },
+  });
+
+  return orders;
+}
+
+export async function getAllOrders() {
+  return prisma.order.findMany({
+    orderBy: { createdAt: "desc" },
     include: { items: { include: { product: true } } },
   });
 }
