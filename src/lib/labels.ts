@@ -1,3 +1,5 @@
+import { ProductCategory } from "@/generated/prisma/client";
+
 export const orderStatusLabels: Record<string, string> = {
   NEW: "Novo pedido",
   QUOTE_SENT: "Orçamento enviado",
@@ -19,3 +21,12 @@ export const priorityLabels: Record<string, string> = {
   NORMAL: "Normal",
   HIGH: "Alta",
 };
+
+export const productCategoryLabels = {
+  INVITES: "Convites",
+  STATIONERY: "Papelaria",
+  TABLE_DECOR: "Mesa & Decoração",
+  PACKAGING: "Embalagens",
+  FAVORS_KITS: "Lembranças & Kits",
+  BRANDING: "Identidade Visual",
+} satisfies Record<ProductCategory, string>;

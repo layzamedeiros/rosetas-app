@@ -1,16 +1,41 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ClipboardList, LayoutDashboard, LogOut, Package, PanelLeft, PanelLeftClose } from "lucide-react";
+import {
+  Archive,
+  ClipboardList,
+  LayoutDashboard,
+  LogOut,
+  Package,
+  PanelLeft,
+  PanelLeftClose,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const navItems = [
-  { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/admin/pedidos", label: "Pedidos", icon: ClipboardList },
-  { href: "/admin/produtos", label: "Produtos", icon: Package },
+  {
+    href: "/admin",
+    label: "Dashboard",
+    icon: LayoutDashboard,
+  },
+  {
+    href: "/admin/pedidos",
+    label: "Pedidos",
+    icon: ClipboardList,
+  },
+  {
+    href: "/admin/produtos",
+    label: "Produtos",
+    icon: Package,
+  },
+  {
+    href: "/admin/historico",
+    label: "Histórico",
+    icon: Archive,
+  },
 ];
 
 export function Sidebar() {
@@ -20,75 +45,128 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        "shrink-0 border-r border-border bg-primary-foreground flex flex-col transition-all duration-200",
-        collapsed ? "w-17" : "w-55"
+        "flex shrink-0 flex-col border-r border-border bg-primary-foreground transition-all duration-200",
+        collapsed ? "w-17" : "w-56"
       )}
     >
-      <div className="flex items-center justify-between p-4 border-b border-border">
+      <div
+        className={cn(
+          "flex h-20 shrink-0 items-center",
+          collapsed ? "justify-center px-3" : "justify-between px-3"
+        )}
+      >
         {!collapsed && (
-          <Image
-            src="/logo-rosetas.png"
-            width={130}
-            height={120}
-            alt="Rosetas Personalizados"
-          />
+          <Link
+            href="/admin"
+            className={cn(
+              "flex min-w-0 items-center",
+              collapsed ? "h-9 w-9 justify-center overflow-hidden" : "flex-1"
+            )}
+          >
+
+            <Image
+              src="/logo-rosetas.svg"
+              width={150}
+              height={48}
+              alt="Rosetas"
+              className={cn(
+                "h-auto object-contain w-38"
+              )}
+              priority
+            />
+          </Link>
         )}
 
         <button
           type="button"
           onClick={() => setCollapsed((value) => !value)}
           title={collapsed ? "Expandir menu" : "Recolher menu"}
-          className="p-2 rounded-xl text-deep hover:bg-secondary/50 transition-colors"
-        >
-          {collapsed ? (
-            <PanelLeft size={18} />
-          ) : (
-            <PanelLeftClose size={18} />
+          aria-label={collapsed ? "Expandir menu" : "Recolher menu"}
+          className={cn(
+            "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground",
+            collapsed && "hidden"
           )}
+        >
+          <PanelLeftClose size={17} />
         </button>
+
+        {collapsed && (
+          <button
+            type="button"
+            onClick={() => setCollapsed(false)}
+            title="Expandir menu"
+            aria-label="Expandir menu"
+            className="absolute ml-0 flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+          >
+            <PanelLeft size={17} />
+          </button>
+        )}
       </div>
 
-      <nav className="flex-1 px-3 mt-4 space-y-1">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = pathname === item.href;
+      <nav
+        className={cn(
+          "flex-1",
+          collapsed ? "px-2" : "px-3"
+        )}
+      >
+        {!collapsed && (
+          <p className="mb-2 mt-4 px-3 text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+            Principal
+          </p>
+        )}
 
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              title={collapsed ? item.label : undefined}
-              className={cn(
-                "flex items-center gap-3 px-3 py-2 rounded-sm text-sm transition-colors",
-                isActive
-                  ? "bg-secondary/60 text-deep font-medium"
-                  : "text-foreground hover:bg-secondary/50",
-                collapsed && "justify-center"
-              )}
-            >
-              <Icon
-                size={18}
-                className="shrink-0"
-              />
+        <div className="space-y-1">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive =
+              item.href === "/admin"
+                ? pathname === "/admin"
+                : pathname.startsWith(item.href);
 
-              {!collapsed && item.label}
-            </Link>
-          );
-        })}
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                title={collapsed ? item.label : undefined}
+                className={cn(
+                  "flex items-center rounded-sm text-sm transition-colors",
+                  collapsed
+                    ? "h-10 justify-center px-2"
+                    : "gap-3 px-3 py-2.5",
+                  isActive
+                    ? "bg-secondary text-deep"
+                    : "text-muted-foreground hover:bg-secondary/60 hover:text-foreground"
+                )}
+              >
+                <Icon
+                  size={18}
+                  className="shrink-0"
+                />
+                {!collapsed && <span>{item.label}</span>}
+              </Link>
+            );
+          })}
+        </div>
       </nav>
 
-      <div className="p-3 border-t border-border">
+      <div
+        className={cn(
+          "shrink-0 border-t border-border",
+          collapsed ? "p-2" : "p-3"
+        )}
+      >
         <button
           type="button"
           title={collapsed ? "Sair" : undefined}
           className={cn(
-            "flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-secondary/50 transition-colors w-full",
-            collapsed && "justify-center"
+            "flex w-full items-center rounded-lg text-sm text-muted-foreground transition-colors hover:bg-secondary/60 hover:text-foreground",
+            collapsed
+              ? "h-10 justify-center px-2"
+              : "gap-3 px-3 py-2.5"
           )}
         >
-          <LogOut size={18} className="shrink-0" />
-
-          {!collapsed && "Sair"}
+          <LogOut size={18} strokeWidth={1.8} />
+          {!collapsed && <span>Sair</span>}
         </button>
       </div>
     </aside>
