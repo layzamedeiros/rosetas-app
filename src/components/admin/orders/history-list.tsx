@@ -1,7 +1,7 @@
 "use client";
 
 import type { Prisma, Product } from "@/generated/prisma/client";
-import { formatOrderSummary } from "@/lib/format-order-summary";
+import { formatOrderSummary, orderTotal } from "@/lib/format-order-summary";
 import { orderStatusLabels } from "@/lib/labels";
 import { useState } from "react";
 import { EditOrderDialog } from "./edit-order-dialog";
@@ -51,10 +51,7 @@ export function HistoryList({
             </thead>
             <tbody className="divide-y divide-border">
               {orders.map((order) => {
-                const total = order.items.reduce(
-                  (sum, item) => sum + item.quantity * item.unitPrice,
-                  0
-                );
+                const total = orderTotal(order.items);
 
                 return (
                   <tr

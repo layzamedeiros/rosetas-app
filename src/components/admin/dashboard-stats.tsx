@@ -4,7 +4,7 @@ type StatCount = { status: string; count: number };
 
 export function DashboardStats({ stats }: { stats: StatCount[] }) {
   return (
-    <div className="grid grid-cols-5 gap-4 mb-10">
+    <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 mb-10">
       {stats.map(({ status, count }) => (
         <div key={status} className="bg-ring/10 rounded-2xl p-5">
           <p className="eyebrow mb-3">{orderStatusLabels[status]}</p>

@@ -1,5 +1,6 @@
 "use client";
 
+import { logout } from "@/app/login/actions"; // 1. Importe a ação de logout
 import { cn } from "@/lib/utils";
 import {
   Archive,
@@ -13,7 +14,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useTransition } from "react"; // 2. Adicione useTransition
 
 const navItems = [
   {
@@ -40,7 +41,15 @@ const navItems = [
 
 export function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
+  const [isPending, startTransition] = useTransition(); // 3. Crie o estado de transição
   const pathname = usePathname();
+
+  // 4. Função que chama o logout no servidor
+  function handleLogout() {
+    startTransition(async () => {
+      await logout();
+    });
+  }
 
   return (
     <aside
@@ -63,15 +72,12 @@ export function Sidebar() {
               collapsed ? "h-9 w-9 justify-center overflow-hidden" : "flex-1"
             )}
           >
-
             <Image
               src="/logo-rosetas.svg"
               width={150}
               height={48}
               alt="Rosetas"
-              className={cn(
-                "h-auto object-contain w-38"
-              )}
+              className={cn("h-auto object-contain w-38")}
               priority
             />
           </Link>
@@ -138,10 +144,7 @@ export function Sidebar() {
                     : "text-muted-foreground hover:bg-secondary/60 hover:text-foreground"
                 )}
               >
-                <Icon
-                  size={18}
-                  className="shrink-0"
-                />
+                <Icon size={18} className="shrink-0" />
                 {!collapsed && <span>{item.label}</span>}
               </Link>
             );
@@ -157,16 +160,16 @@ export function Sidebar() {
       >
         <button
           type="button"
+          onClick={handleLogout}
+          disabled={isPending}
           title={collapsed ? "Sair" : undefined}
           className={cn(
-            "flex w-full items-center rounded-lg text-sm text-muted-foreground transition-colors hover:bg-secondary/60 hover:text-foreground",
-            collapsed
-              ? "h-10 justify-center px-2"
-              : "gap-3 px-3 py-2.5"
+            "flex w-full items-center rounded-lg text-sm text-muted-foreground transition-colors hover:bg-secondary/60 hover:text-foreground disabled:opacity-50 disabled:cursor-not-allowed",
+            collapsed ? "h-10 justify-center px-2" : "gap-3 px-3 py-2.5"
           )}
         >
           <LogOut size={18} strokeWidth={1.8} />
-          {!collapsed && <span>Sair</span>}
+          {!collapsed && <span>{isPending ? "Saindo..." : "Sair"}</span>}
         </button>
       </div>
     </aside>

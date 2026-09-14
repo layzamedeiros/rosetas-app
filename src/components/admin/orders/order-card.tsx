@@ -1,7 +1,7 @@
 "use client";
 
 import type { Order, OrderItem, Product } from "@/generated/prisma/client";
-import { formatOrderSummary } from "@/lib/format-order-summary";
+import { formatOrderSummary, orderTotal } from "@/lib/format-order-summary";
 import { priorityLabels } from "@/lib/labels";
 import { cn } from "@/lib/utils";
 import { useDraggable } from "@dnd-kit/core";
@@ -123,10 +123,7 @@ export function OrderCardOverlay({
 }: {
   order: OrderWithItems;
 }) {
-  const total = order.items.reduce(
-    (sum, item) => sum + item.quantity * item.unitPrice,
-    0
-  );
+  const total = orderTotal(order.items);
 
   return (
     <div className="w-70 rounded-xl border border-border bg-card p-3 text-left shadow-xl">

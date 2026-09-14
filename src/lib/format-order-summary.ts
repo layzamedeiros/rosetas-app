@@ -13,3 +13,7 @@ export function formatOrderSummary(items: ItemWithProduct[]) {
 
   return `${summary} + ${rest.length} item(ns)`;
 }
+
+export function orderTotal(items: { quantity: number; unitPrice: number }[]) {
+  return items.reduce((sum, item) => sum + item.quantity * item.unitPrice, 0);
+}

@@ -19,7 +19,7 @@ export async function createOrder(data: unknown) {
       data: {
         customerName: input.customerName.trim(),
         customerWhatsapp: input.customerWhatsapp.trim(),
-        eventDate: input.eventDate ? new Date(input.eventDate) : null,
+        eventDate: input.eventDate ? new Date(`${input.eventDate}T12:00:00`) : null,
         notes: input.notes?.trim() || null,
         priority: input.priority,
         status: input.status || "NEW",
@@ -88,7 +88,7 @@ export async function updateOrder(orderId: string, data: unknown) {
         data: {
           customerName: input.customerName.trim(),
           customerWhatsapp: input.customerWhatsapp.trim(),
-          eventDate: input.eventDate ? new Date(input.eventDate) : null,
+          eventDate: input.eventDate ? new Date(`${input.eventDate}T12:00:00`) : null,
           notes: input.notes?.trim() || null,
           priority: input.priority,
           status: input.status,

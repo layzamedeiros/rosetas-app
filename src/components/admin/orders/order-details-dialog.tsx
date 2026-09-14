@@ -1,6 +1,7 @@
 "use client";
 
 import type { Prisma } from "@/generated/prisma/client";
+import { orderTotal } from "@/lib/format-order-summary";
 import { orderStatusLabels, priorityLabels } from "@/lib/labels";
 import { MessageCircle, X } from "lucide-react";
 import { useEffect, useRef } from "react";
@@ -32,10 +33,7 @@ export function OrderDetailsDialog({
     dialogRef.current?.showModal();
   }, []);
 
-  const total = order.items.reduce(
-    (sum, item) => sum + item.quantity * item.unitPrice,
-    0
-  );
+  const total = orderTotal(order.items);
   const formatCurrency = (value: number) =>
     (value / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
