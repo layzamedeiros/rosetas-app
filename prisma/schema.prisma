@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -21,9 +21,18 @@ enum Priority {
   HIGH
 }
 
+enum ProductCategory {
+  INVITES
+  STATIONERY
+  TABLE_DECOR
+  PACKAGING
+  FAVORS_KITS
+  BRANDING
+}
+
 model Product {
   id          String   @id @default(cuid())
-  category    String
+  category     ProductCategory
   title       String
   description String
   imageUrl    String?
