@@ -15,7 +15,40 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Rosetas Personalizados",
+  title: {
+    template: "%s | Rosetas Personalizados",
+    default: "Rosetas Personalizados",
+  },
+  description:
+    "Papelaria, convites e identidade visual para casamentos, 15 anos, formaturas e eventos corporativos. Detalhes feitos à mão que eternizam a sua história.",
+  keywords: [
+    "papelaria para eventos",
+    "personalizados",
+    "convites",
+    "identidade visual",
+    "eventos",
+    "papelaria personalizada",
+    "lembranças",
+    "15 anos",
+    "casamento",
+    "eventos corporativos",
+  ],
+  openGraph: {
+    title: "Rosetas Personalizados | Personalizando seus melhores momentos",
+    description:
+      "Detalhes feitos à mão que transformam momentos em memórias. Convites e identidade visual para eventos inesquecíveis.",
+    url: "https://rosetaspersonalizados.com.br",
+    siteName: "Rosetas Personalizados",
+    images: [
+      {
+        url: "/logo-simbolo-rosetas.png",
+        width: 800,
+        height: 800,
+      },
+    ],
+    locale: "pt_BR",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -24,7 +57,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" className="scroll-smooth">
       <body className={`${cormorant.variable} ${dmSans.variable}`}>
         {children}
         <ToastProvider />
