@@ -29,7 +29,3 @@ Protegido por proxy/middleware no edge, garantindo que apenas usuários autentic
 - Gestão de Catálogo: Criação, edição, ativação/desativação e exclusão de produtos com validação estrita (Zod).
 - Gestão de Pedidos (Kanban): Pipeline de status de pedidos interativo (Drag and Drop).
 - Interface Otimista (Optimistic UI): O painel utiliza `useOptimistic` do React para atualizar a interface imediatamente durante mutações de banco de dados, eliminando a latência percebida pelo usuário.
-
-1. Clone o repositório:
-```bash
-git clone <url-do-repositorio>
